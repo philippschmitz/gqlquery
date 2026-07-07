@@ -46,8 +46,8 @@ elif [ ! -r "$1" ]; then
   echo "Error: file '$1' is not readable." >&2; exit 1
 fi
 
-# Remove newlines with tr, wrap in query object with jq
-QUERY=$(jq -c -n --arg q "$(tr -d '\n' < "$1")" '{ query: $q }')
+# Wrap in query object with jq
+QUERY=$(jq -c -n --rawfile q "$1" '{ query: $q }')
 
 # Build optional auth header parameter
 AUTH_HEADER=()
